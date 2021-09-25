@@ -32,13 +32,9 @@ find_param.send_keys('in:inbox ' + theme)
 time.sleep(1)
 find_param.send_keys(Keys.ENTER)
 time.sleep(2)
-num_of_letters = driver.find_elements_by_xpath('//span[@class="ts"]')
+num_of_letters = driver.find_elements_by_xpath("//*[contains(text(), ' из ')]")[2].text
 time.sleep(2)
-# print(num_of_letters)
-#//*[@id=":5e"]/span/span[2],
-# /html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[1]/div/div[1]/div[2]/div[1]/span/div[1]/span/span[2]
-
-
+num_of_letters = num_of_letters.split()[-1]
 
 new_letter_create = driver.find_element_by_xpath('/html/body/div[7]/div[3]/div/div[2]/div[1]/div[1]/div[1]/div/div/div/div[1]/div/div')
 time.sleep(1)
@@ -56,9 +52,12 @@ time.sleep(1)
 send_letter.send_keys(theme)
 
 time.sleep(1)
-send_letter_text = driver.find_element_by_xpath('//div[@class="Am Al editable LW-avf tS-tW"]')
+send_letter_text = driver.find_element_by_xpath\
+    ('//div[@class="Am Al editable LW-avf tS-tW"]')
 time.sleep(2)
-send_letter_text.send_keys('Тема письма ' + theme + 'Юсупов Идель Милисович')
+send_letter_text.send_keys(num_of_letters +
+                           ' письма(ем) с темой ' + theme + ' нашлось в данном '
+                            'почтовом ящике. Юсупов Идель Милисович')
 time.sleep(1)
 send_letter_text.send_keys(Keys.CONTROL, Keys.ENTER)
 driver.quit()
